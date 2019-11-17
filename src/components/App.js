@@ -1,9 +1,9 @@
-import React, { Component } from 'react'
+import React, { PureComponent } from 'react'
 import ArticlesList from './ArticlesList'
 import articles from '../fixtures'
 import 'bootstrap/dist/css/bootstrap.css'
 
-class App extends Component {
+class App extends PureComponent {
     state = {
         reverted: false
     }
@@ -18,14 +18,16 @@ class App extends Component {
                         </button>
                     </h1>
                 </div>
-                <ArticlesList articles={this.state.reverted ? articles.reverse() : articles} />
+                <ArticlesList articles={this.state.reverted ? articles.slice().reverse() : articles} />
             </div>
         )
     }
 
-    revert = () => this.setState({
-        reverted: !this.state.reverted
-    })
+    revert = () => {
+        this.setState({
+            reverted: !this.state.reverted
+        })
+    }
 }
 
 export default App
