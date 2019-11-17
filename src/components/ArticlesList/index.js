@@ -3,10 +3,17 @@ import Article from '../Article'
 import './style.css'
 
 export default class ArticlesList extends PureComponent {
+    state = {
+        openArticleId: null
+    }
     render() {
         const articleElements = this.props.articles.map((article, index) => 
             <li className="article-list__li" key={article.id}>
-                <Article article={article} defaultOpen={index === 0} />
+                <Article
+                    article={article}
+                    isOpen={this.state.openArticleId === article.id}
+                    onButtonClick={this.handleClick.bind(this, article.id)}
+                />
             </li>
         )
         return (
@@ -15,4 +22,8 @@ export default class ArticlesList extends PureComponent {
             </ul>
         )
     }
+
+    handleClick = openArticleId => this.setState({
+        openArticleId: this.state.openArticleId === openArticleId ? null : openArticleId
+    })
 }
