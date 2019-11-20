@@ -5,7 +5,6 @@ class Article extends PureComponent {
         super(props)
 
         this.state = {
-            isOpen: props.defaultOpen,
             count: 0
         }
     }
@@ -20,27 +19,29 @@ class Article extends PureComponent {
         console.log('mounting')
     }
 
+    /*
     componentWillReceiveProps(nextProps) {
         if (nextProps.defaultOpen !== this.props.defaultOpen) this.setState({
             isOpen: nextProps.defaultOpen
         })
     }
+    */
 
     componentWillUpdate() {
         console.log('will update')
     }
 
     render() {
-        const { article } = this.props
-        const body = this.state.isOpen && <section className="card-text">{article.text}</section>
+        const { article, isOpen, onButtonClick } = this.props
+        const body = isOpen && <section className="card-text">{article.text}</section>
         return (
             <div className="card mx-auto" style={{width: '50%'}}>
                 <div className="card-header">
                     <h2 onClick={this.incrementCounter}>
                         {article.title}
                         clicked {this.state.count}
-                        <button className="btn btn-primary btn-lg float-right" onClick={this.handleClick}>
-                            {this.state.isOpen ? 'close' : 'open'}
+                        <button className="btn btn-primary btn-lg float-right" onClick={onButtonClick}>
+                            {isOpen ? 'close' : 'open'}
                         </button>
                     </h2>
                 </div>
@@ -57,12 +58,6 @@ class Article extends PureComponent {
     incrementCounter = () => {
         this.setState({
             count: this.state.count + 1
-        })
-    }
-
-    handleClick = () => {
-        this.setState({
-            isOpen: !this.state.isOpen
         })
     }
 }
